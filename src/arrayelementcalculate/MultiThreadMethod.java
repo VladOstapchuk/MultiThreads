@@ -9,7 +9,7 @@ public class MultiThreadMethod{
         for (int i = 0; i < arrarr.length; i++) {
             int size = array.length / threadNumber;
             int startindex = size * i;
-            int endindex = ((i + 1) * size);
+            int endindex = (((i + 1) * size)-1);
             if ((array.length - endindex) < size) {
                 endindex = array.length;
             }

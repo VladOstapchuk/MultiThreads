@@ -53,7 +53,7 @@ public class Arrayint implements Runnable {
 
 
     public int calculate(int from, int to) {
-        int result = -1;
+        int result = 0;
         if (bigarray == null) {
             return -1;
         } else {
