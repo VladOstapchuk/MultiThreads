@@ -1,3 +1,5 @@
+package factorialcalculate100threads;
+
 import java.math.BigInteger;
 
 public class FactorilCalculate implements Runnable {
@@ -25,11 +27,13 @@ public class FactorilCalculate implements Runnable {
 
 
 
-
     @Override
     public void run() {
         Thread th = Thread.currentThread();
+        long starttime = System.currentTimeMillis();
         System.out.println(th.getName() + " " + calculateFactorial(number));
+        long endtime = System.currentTimeMillis();
+        System.out.println("Time to calculate: " + (endtime - starttime) + " " + th.getName());
 
     }
 }
