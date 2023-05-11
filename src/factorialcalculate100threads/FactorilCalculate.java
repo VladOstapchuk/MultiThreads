@@ -31,7 +31,7 @@ public class FactorilCalculate implements Runnable {
     public void run() {
         Thread th = Thread.currentThread();
         long starttime = System.currentTimeMillis();
-        System.out.println(th.getName() + " " + calculateFactorial(number));
+        System.out.println(th.getName() + " " + calculateFactorial(this.number));
         long endtime = System.currentTimeMillis();
         System.out.println("Time to calculate: " + (endtime - starttime) + " " + th.getName());
 
