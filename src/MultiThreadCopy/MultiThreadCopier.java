@@ -35,7 +35,7 @@ public class MultiThreadCopier implements Runnable{
         for (int i = startindex; i <= endindex; i+=1) {
             File f = new File(folderOut, fileArray[i].getName());
             f.createNewFile();
-            FileOperation.fileCopy(f, fileArray[i]);
+            FileOperation.fileCopy(fileArray[i], f);
 
         }
 
