@@ -8,13 +8,13 @@ public class FolderCopier implements Runnable {
     private String folderFrom;
     private String folderTo;
 
-    private int threadNumber;
+ //   private int threadNumber;
 
 
-    public FolderCopier(String folderFROM, String folderTO, int threadNumber ) {
+    public FolderCopier(String folderFROM, String folderTO ) {
         this.folderFrom = folderFROM;
         this.folderTo = folderTO;
-        this.threadNumber = threadNumber;
+        //this.threadNumber = threadNumber;
     }
 
     public String getFolderFROM() {
@@ -25,9 +25,9 @@ public class FolderCopier implements Runnable {
         return folderTo;
     }
 
-    public int getThreadNumber() {
-        return threadNumber;
-    }
+////    public int getThreadNumber() {
+//        return threadNumber;
+//    }
 
 
 //Распределяем кол-во файлов в массиве на кол-во потоков
@@ -35,22 +35,37 @@ public class FolderCopier implements Runnable {
         File folderIn = new File(folderFrom);
         File folderOut = new File(folderTo);
         if (folderIn == null || folderOut == null){
-            return "None";
+            return "Folder not found";
         }
         File[] files = folderIn.listFiles();
+
+        //кол-во потоков равно кол-ву файлов в папке
+        int threadNumber = files.length;
+        if (threadNumber > 4){
+            threadNumber = 4;
+        }
+
+        int size = (int) Math.ceil((double)files.length / (double)threadNumber);
+
         MultiThreadCopier[] mThC = new MultiThreadCopier[threadNumber];
         System.out.println(Arrays.toString(files));
 
         for (int i = 0; i < mThC.length; i+=1) {
-            int size = files.length / threadNumber;
+
             int startindex = size * i;
             int endindex = (((i + 1) * size)-1);
-            if ((files.length - endindex) < size) {
-                endindex = files.length;
+            if ((files.length - endindex) < (size - 1))  {
+                endindex = (files.length - 1);
+
+
             }
 
-            // каждый объект запускает свой поток в конструкторе при создании объекта
-            mThC[i] = new MultiThreadCopier(folderFrom, folderTo, files, startindex, endindex );
+            // не запускаем поток, если для него нет файло (т.е. будет или 3 или 4 потока (для 9 файло - 3 потока
+            //))
+            if ( startindex <= endindex ) {
+                // каждый объект запускает свой поток в конструкторе при создании объекта
+                mThC[i] = new MultiThreadCopier(folderFrom, folderTo, files, startindex, endindex);
+            }
         }
         return  "Files copied - from FolderCopier";
     }

@@ -29,13 +29,15 @@ public class MultiThreadCopier implements Runnable{
         File folderIn = new File(folderFrom);
         File folderOut = new File(folderTo);
         if (folderIn == null || folderOut == null){
-            return "None";
+            return "Folder not found";
         }
+
 
         for (int i = startindex; i <= endindex; i+=1) {
             File f = new File(folderOut, fileArray[i].getName());
             f.createNewFile();
             FileOperation.fileCopy(fileArray[i], f);
+            System.out.println(fileArray[i].getName() + '\t' + startindex + '\t' + endindex  );
 
         }
 

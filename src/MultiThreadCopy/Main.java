@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
 
 // Запуск потока, в которые передается адрес папок для копирования и кол-во потоков
-        Thread th = new Thread(new FolderCopier("C:\\folderFROM", "C:\\folderTO", 3));
+        Thread th = new Thread(new FolderCopier("C:\\folderFROM", "C:\\folderTO"));
         th.start();
         try {
             th.join();
