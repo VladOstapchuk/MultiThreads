@@ -33,28 +33,67 @@ public class Checker implements Runnable  {
 
         StringBuilder stb = new StringBuilder();
 
+        boolean flag = true;
+        int elementposition;
+
                 if (file == null){
                     return "Folder not found";
                 } else if (Arrays.equals(tmpArray, filesArray)) {
                     return "No changes";
                 }
-                 else{
-                    for (String string: tmpArray ) {
+                 else {
 
-
+                     // проверка, если файл удалится
+                    for (String stringdeleted: tmpArray ) {
 
                         for (int i = 0; i < filesArray.length; i++){
 
-                        if (filesArray[i].equals(string)){
+                        if (stringdeleted.equals(filesArray[i])){
+                            flag = true;
                             break;
-                        } else {
-                            stb.append(filesArray[i] + System.lineSeparator());
-                            tmpArray = filesArray;
-                            break;
+                        }
+                        else {
+                            flag = false;
                         }
 
-                    }
                         }
+                        if (flag == false && stringdeleted != null){
+                            stb.append(stringdeleted + " was deleted");
+                            tmpArray = filesArray;
+                        }
+                    }
+
+
+                        // проверка, если файл добавлен
+
+                        for (String stringadded: filesArray ) {
+
+                            for (int i = 0; i < tmpArray.length; i++){
+
+                                if (filesArray[i].equals(stringadded)){
+                                    flag = true;
+                                    break;
+                                }
+                                else {
+                                    flag = false;
+                                }
+
+                            }
+                            if (flag == false && stringadded != null){
+                                stb.append(stringadded + " was added");
+                                tmpArray = filesArray;
+                            }
+                        }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -69,7 +108,7 @@ public class Checker implements Runnable  {
         for (; !th.isInterrupted(); ) {
             System.out.println(checkMethod());
             try {
-                Thread.sleep(2000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
